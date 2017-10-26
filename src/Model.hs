@@ -2,6 +2,8 @@
 --   which represent the state of the game
 module Model where
 
+import Graphics.Gloss
+
 data PlayerInfo = ShowNothing
                 | ShowInfo
 
@@ -11,15 +13,15 @@ data Life = Alive
 
 data Progress = NotFinished | Finished
 
-data Level = [Platform]
+type Level = [Platform]
 
 nO_SECS_BETWEEN_CYCLES :: Float
 nO_SECS_BETWEEN_CYCLES = 0.1
 
 data Player = Player {
-                          life :: Life
+                          playerLife :: Life
                         , lives :: Int
-                        , position :: Point
+                        , playerPosition :: Point
                         , firing :: Bool
                         , weapon :: Weapon
                         , score :: Int
@@ -28,40 +30,43 @@ data Player = Player {
 basePlayer = Player Alive 4 (0,0) False baseWeapon 0 (0,0)
 
 data Enemy = Enemy {
-                        name :: String
-                      , life :: Life
-                      , position :: Point
+                        enemyName :: String
+                      , enemyLife :: Life
+                      , enemyPosition :: Point
                       , item :: Maybe Item
-                      , move :: Vector
+                      , enemyMove :: Vector
                    }
 
 data Item = Item {
-                      type :: Weapon
-                    , position :: Point
+                      itemType :: Weapon
+                    , itemPosition :: Point
                  }
 
 data Bullet = Bullet {
-                         name :: String
-                       , width :: Int
+                         bulletType :: BulletType
+                       , bulletWidth :: Int
                        , length :: Int
-                       , position :: Point
-                       , move :: Vector
+                       , bulletPosition :: Point
+                       , bulletMove :: Vector
                      }
-baseBullet = Bullet "basic" 2 2 (0,0) (0,0) 
+
+data BulletType = DefaultBullet | Bullet2
+
+baseBullet = Bullet DefaultBullet 2 2 (0,0) (0,0)
 
 data Weapon = Weapon {
                          ammo :: Int
-                       , type :: Bullet
+                       , ammoType :: Bullet
                      }
 baseWeapon = Weapon 5 baseBullet
 
 data Platform = Platform {
-                            position :: Point
-                          , width :: Int
-                          , height :: Int
+                            platformPosition :: Point,
+                            platformWidth :: Int,
+                            platformHeight :: Int
                          }
 basePlatform = Platform (0,0) 100 20
-baseLevel = Level [basePlatform]
+baseLevel = [basePlatform]
 
 data GameState = GameState {
                               player :: Player
@@ -73,4 +78,4 @@ data GameState = GameState {
                            }
 
 initState :: GameState
-initState = GameState player NotFinished [] [] [] level
+initState = GameState basePlayer NotFinished [] [] [] baseLevel

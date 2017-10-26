@@ -9,4 +9,4 @@ view :: GameState -> IO Picture
 view = return . viewPure
 
 viewPure :: GameState -> Picture
-viewPure state = 
+viewPure state = undefined
