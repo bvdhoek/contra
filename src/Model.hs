@@ -13,12 +13,14 @@ data Life = Alive
 
 data Progress = NotFinished | Finished
 
+data BulletType = DefaultBullet | Bullet2
+
 type Level = [Platform]
 
 nO_SECS_BETWEEN_CYCLES :: Float
 nO_SECS_BETWEEN_CYCLES = 0.1
 
-data Player = Player {
+data Drawables = Player {
                           playerLife :: Life
                         , lives :: Int
                         , playerPosition :: Point
@@ -26,56 +28,48 @@ data Player = Player {
                         , weapon :: Weapon
                         , score :: Int
                         , move :: Vector
-                     }
-basePlayer = Player Alive 4 (0,0) False baseWeapon 0 (0,0)
-
-data Enemy = Enemy {
-                        enemyName :: String
-                      , enemyLife :: Life
-                      , enemyPosition :: Point
-                      , item :: Maybe Item
-                      , enemyMove :: Vector
-                   }
-
-data Item = Item {
-                      itemType :: Weapon
-                    , itemPosition :: Point
-                 }
-
-data Bullet = Bullet {
-                         bulletType :: BulletType
-                       , bulletWidth :: Int
-                       , length :: Int
-                       , bulletPosition :: Point
-                       , bulletMove :: Vector
-                     }
-
-data BulletType = DefaultBullet | Bullet2
-
-baseBullet = Bullet DefaultBullet 2 2 (0,0) (0,0)
-
-data Weapon = Weapon {
-                         ammo :: Int
-                       , ammoType :: Bullet
-                     }
-baseWeapon = Weapon 5 baseBullet
-
-data Platform = Platform {
-                            platformPosition :: Point,
-                            platformWidth :: Int,
-                            platformHeight :: Int
-                         }
-basePlatform = Platform (0,0) 100 20
-baseLevel = [basePlatform]
+                    } |
+                  Enemy {
+                          enemyLife :: Life
+                        , enemyPosition :: Point
+                        , item :: Maybe Item
+                        , enemyMove :: Vector
+                    } |
+                  Item {
+                          itemType :: Weapon
+                        , itemPosition :: Point
+                    } |
+                  Bullet {
+                          bulletType :: BulletType
+                        , bulletWidth :: Int
+                        , length :: Int
+                        , bulletPosition :: Point
+                        , bulletMove :: Vector
+                    } |
+                  Weapon {
+                          ammo :: Int
+                        , ammoType :: Bullet
+                    } |
+                  Platform {
+                          platformPosition :: Point
+                        , platformWidth :: Int
+                        , platformHeight :: Int
+                    }
 
 data GameState = GameState {
-                              player :: Player
-                            , progress :: Progress
-                            , items :: [Item]
-                            , bullets :: [Bullet]
-                            , enemies :: [Enemy]
-                            , level :: Level
+                              progress :: Progress
+                            , objects :: [Drawables]
                            }
 
 initState :: GameState
-initState = GameState basePlayer NotFinished [] [] [] baseLevel
+initState = GameState NotFinished initDraw
+
+basePlayer, baseBullet, baseWeapon, basePlatform :: Drawables
+basePlayer = Player Alive 4 (0,0) False baseWeapon 0 (0,0)
+baseBullet = Bullet DefaultBullet 2 2 (0,0) (0,0)
+baseWeapon = Weapon 5 baseBullet
+basePlatform = Platform (0,0) 100 20
+baseLevel = Level [basePlatform]
+
+initDraw :: [Drawables]
+initDraw = [basePlayer, baseBullet, baseWeapon] ++ baseLevel
