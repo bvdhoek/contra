@@ -1,19 +1,26 @@
 module Models.Player where
   import TypeClasses.Drawable
+  import TypeClasses.Movable
   import Models.Life
   import Models.Weapon
   import Graphics.Gloss
 
   data Player = Player {  playerLife :: Life
                           , lives :: Int
-                          , playerPosition :: Point
+                          , posPlayer :: Point
                           , firing :: Bool
                           , weapon :: Weapon
-                          , move :: Vector
+                          , velPlayer :: Vector
                        }
 
   basePlayer :: Player
   basePlayer = Player Alive 4 (0,0) False baseWeapon (0,0)
 
   instance Drawable Player where
-    render player = translate 30 50 $ color blue $ rectangleSolid 10 50
+    render (Player _ _ (x, y) _ _ _) = translate x y $ color blue $ rectangleSolid 10 50
+
+  instance Movable Player where
+    move p = p { posPlayer = (x + vx, y + vy) }
+      where
+        (x, y) = posPlayer p
+        (vx, vy) = velPlayer p

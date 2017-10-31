@@ -1,8 +1,8 @@
 -- | This module defines how to turn
 --   the game state into a picture
 module View where
-
   import Graphics.Gloss
+  import TypeClasses.Drawable
   import Models.GameState
   import Models.Player
 
@@ -10,6 +10,4 @@ module View where
   view = return . viewPure
 
   viewPure :: GameState -> Picture
-  viewPure state = pictures
-    [ render (player state)
-    ]
+  viewPure state = render (player state)
