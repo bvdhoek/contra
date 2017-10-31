@@ -16,6 +16,9 @@ module Models.Player where
   basePlayer :: Player
   basePlayer = Player Alive 4 (0,0) False baseWeapon (0,0)
 
+  stopPlayer :: Player -> Player
+  stopPlayer p = p { velPlayer = (0, 0) }
+
   instance Drawable Player where
     render (Player _ _ (x, y) _ _ _) = translate x y $ color blue $ rectangleSolid 10 50
 
@@ -24,3 +27,11 @@ module Models.Player where
       where
         (x, y) = posPlayer p
         (vx, vy) = velPlayer p
+
+    moveVertical p vy = p { velPlayer = (vx, vy) }
+      where
+        (vx, vy') = velPlayer p
+
+    moveHorizontal p vx = p { velPlayer = (vx, vy) }
+      where
+        (vx', vy) = velPlayer p

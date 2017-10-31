@@ -14,14 +14,11 @@ offset = 100
 window :: Display
 window = InWindow "Contra" (width, height) (offset, offset)
 
-nO_SECS_BETWEEN_CYCLES :: Float
-nO_SECS_BETWEEN_CYCLES = 0.1
-
 main :: IO ()
-main = playIO window
-              black
-              25
+main = playIO window     -- the actual window as described above
+              black      -- background color
+              25         -- fps
               initState
-              view
-              input
-              step
+              view       -- render the current gamestate
+              input      -- handle pressed keys
+              step       -- update the gamestate each frame

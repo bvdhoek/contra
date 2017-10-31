@@ -3,3 +3,5 @@ module TypeClasses.Movable where
 
   class Movable m where
     move :: m -> m
+    moveVertical :: m -> Float -> m
+    moveHorizontal :: m -> Float -> m

@@ -3,3 +3,6 @@ module TypeClasses.Drawable where
 
   class Drawable d where
     render :: d -> Picture
+
+    renderAll :: [d] -> [Picture]
+    renderAll = map render
