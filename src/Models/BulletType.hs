@@ -1,2 +1,2 @@
 module Models.BulletType where
-  data BulletType = DefaultBullet
+  data BulletType = DefaultBullet | Laser
