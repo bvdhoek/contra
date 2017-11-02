@@ -6,16 +6,12 @@ module Models.GameState where
   import Models.Platform
   import Models.Weapon
   import Models.Direction
+  import Models.Level
   import TypeClasses.Drawable
   import Graphics.Gloss
 
   data Progress = NotFinished | Finished
   data Paused = Paused | NotPaused
-
-  type Level = [Platform]
-
-  baseLevel :: Level
-  baseLevel = [basePlatform]
 
   initState :: GameState
   initState = GameState basePlayer [] [] [] baseLevel 0 NotFinished NotPaused
@@ -41,4 +37,4 @@ module Models.GameState where
                    | dirPlayer player == Models.Direction.Left  = (-5, 0)
 
   instance Drawable GameState where
-    render state = pictures ([render (player state)] ++ map render (bullets state))
+    render state = pictures ([render (player state)] ++ map render (bullets state) ++ map render (level state))
