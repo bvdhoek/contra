@@ -7,6 +7,7 @@ import Graphics.Gloss.Interface.IO.Game
 import TypeClasses.Movable
 import Models.GameState
 import Models.Player
+import Models.Direction
 
 input :: Event -> GameState -> IO GameState
 input (EventKey (SpecialKey KeyRight) Down _ _) s = return $ (s { player = moveHorizontal (player s) (3) })
