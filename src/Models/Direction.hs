@@ -1,2 +1,2 @@
 module Models.Direction where
-  data Direction = Left | Right deriving Eq
+  data Direction = Left | Right | Up deriving Eq

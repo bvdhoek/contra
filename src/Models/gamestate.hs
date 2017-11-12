@@ -36,6 +36,7 @@ module Models.GameState where
 
   bulletDir player | dirPlayer player == Models.Direction.Right = (5, 0)
                    | dirPlayer player == Models.Direction.Left  = (-5, 0)
+                   | dirPlayer player == Models.Direction.Up    = (0, 5)
 
   instance Drawable GameState where
     render state = pictures (map render (level state) ++ [render (player state)] ++ map render (bullets state) ++ [render (score state)])
