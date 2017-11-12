@@ -17,7 +17,7 @@ module Models.Enemy where
   platformCheck p = snd (posEnemy p) <= (-150)
 
   instance Drawable Enemy where
-    render (Enemy (x, y) _ _ _) = translate x y $ png "sprites/LanceStandingR.png"
+    render (Enemy (x, y) _ _ _) = translate x y $ png "sprites/SCheep.png"
 
   instance Movable Enemy where
     move p | vy > (-4) && eOnPlatform p == False = p { posEnemy = (x + vx, y + vy), velEnemy = (vx, (vy - 2)), eOnPlatform = platformCheck p }
@@ -26,7 +26,7 @@ module Models.Enemy where
       where
         (x, y) = posEnemy p
         (vx, vy) | x == 150    = -(velEnemy p)
-                 | x == (-150) = -(velEnemy p) 
+                 | x == (-150) = -(velEnemy p)
                  | otherwise = velEnemy p
 
     moveVertical p vy | eOnPlatform p = p { velEnemy = (vx, vy) }
