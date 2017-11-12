@@ -21,11 +21,13 @@ module Models.Enemy where
 
   instance Movable Enemy where
     move p | vy > (-4) && eOnPlatform p == False = p { posEnemy = (x + vx, y + vy), velEnemy = (vx, (vy - 2)), eOnPlatform = platformCheck p }
-           | vy < 0 && eOnPlatform p = p { posEnemy = (x + vx, y + vy), velEnemy = (vx, 0), eOnPlatform = platformCheck p }
+           | vy < 0 && eOnPlatform p = p { posEnemy = (x + vx, y + vy), velEnemy = (vx, 8), eOnPlatform = platformCheck p }
            | otherwise = p { posEnemy = (x + vx, y + vy), eOnPlatform = platformCheck p }
       where
         (x, y) = posEnemy p
-        (vx, vy) = velEnemy p
+        (vx, vy) | x == 150    = -(velEnemy p)
+                 | x == (-150) = -(velEnemy p) 
+                 | otherwise = velEnemy p
 
     moveVertical p vy | eOnPlatform p = p { velEnemy = (vx, vy) }
                       | otherwise = p { velEnemy = (vx, vy') }
