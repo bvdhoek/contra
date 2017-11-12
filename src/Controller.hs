@@ -7,19 +7,18 @@ import Graphics.Gloss.Interface.IO.Game
 import TypeClasses.Movable
 import Models.GameState
 import Models.Player
-import Models.Direction
 
 input :: Event -> GameState -> IO GameState
-input (EventKey (SpecialKey KeyRight) Down _ _) s = return $ (s { player = moveHorizontal (player s) (3) })
+input (EventKey (SpecialKey KeyRight) Down _ _) s = return $ (s { player = moveHorizontal (player s) (4) })
 input (EventKey (SpecialKey KeyRight) Up _ _) s = return $ (s { player = moveHorizontal (player s) 0 })
 
-input (EventKey (SpecialKey KeyLeft) Down _ _) s = return $ (s { player = moveHorizontal (player s) (-3) })
+input (EventKey (SpecialKey KeyLeft) Down _ _) s = return $ (s { player = moveHorizontal (player s) (-4) })
 input (EventKey (SpecialKey KeyLeft) Up _ _) s = return $ (s { player = moveHorizontal (player s) 0 })
 
-input (EventKey (SpecialKey KeyUp) Down _ _) s = return $ (s { player = moveVertical (player s) (3) })
+input (EventKey (SpecialKey KeyUp) Down _ _) s = return $ (s { player = moveVertical (player s) 10 })
 input (EventKey (SpecialKey KeyUp) Up _ _) s = return $ (s { player = moveVertical (player s) 0 })
 
-input (EventKey (SpecialKey KeyDown) Down _ _) s = return $ (s { player = moveVertical (player s) (-3) })
+input (EventKey (SpecialKey KeyDown) Down _ _) s = return $ (s { player = moveVertical (player s) 0 })
 input (EventKey (SpecialKey KeyDown) Up _ _) s = return $ (s { player = moveVertical (player s) 0 })
 
 input (EventKey (Char 's') Down _ _) s = return $ (shoot s)
