@@ -30,13 +30,20 @@ module Models.GameState where
   shoot :: GameState -> GameState
   shoot s = s { bullets = bullet' : (bullets s) }
     where
-      bullet' = Bullet { bulletType = typeBullet (weapon p1), posBullet = (bulletX, bulletY + 5), velBullet = bulletDir (player s) }
+      bullet' = Bullet { bulletType = typeBullet (weapon p1), posBullet = (bulletX, bulletY + 5) + bulStart (player s), velBullet = bulletDir (player s) }
       p1 = (player s)
       (bulletX, bulletY) = posPlayer p1
 
+  bulletDir :: Player -> Vector
   bulletDir player | dirPlayer player == Models.Direction.Right = (5, 0)
                    | dirPlayer player == Models.Direction.Left  = (-5, 0)
                    | dirPlayer player == Models.Direction.Up    = (0, 5)
+
+  bulStart :: Player -> Vector
+  bulStart player  | dirPlayer player == Models.Direction.Right = (10, 0)
+                   | dirPlayer player == Models.Direction.Left  = (-10, 0)
+                   | dirPlayer player == Models.Direction.Up    = (-3, 20)
+
 
   instance Drawable GameState where
     render state = pictures (map render (level state) ++ [render (player state)] ++ map render (bullets state) ++ [render (score state)])

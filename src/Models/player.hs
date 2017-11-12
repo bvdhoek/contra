@@ -30,7 +30,7 @@ module Models.Player where
   instance Drawable Player where
     render (Player _ _ (x, y)  _ _ Models.Direction.Right _) = translate x y $ png "sprites/LanceStandingR.png"
     render (Player _ _ (x, y)  _ _ Models.Direction.Left _) = translate x y $ png "sprites/LanceStandingL.png"
-    render (Player _ _ (x, y)  _ _ Models.Direction.Up _) = translate x y $ png "sprites/LanceStandingL.png"
+    render (Player _ _ (x, y)  _ _ Models.Direction.Up _) = translate x (y + 5) $ png "sprites/LanceStandingUp.png"
 
   instance Movable Player where
     move p | vy > (-4) && onPlatform p == False = p { posPlayer = (x + vx, y + vy), velPlayer = (vx, (vy - 2)), onPlatform = platformCheck p }
