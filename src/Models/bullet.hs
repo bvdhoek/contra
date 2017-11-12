@@ -11,7 +11,8 @@ module Models.Bullet where
 
   instance Drawable Bullet where
     render (Bullet DefaultBullet (x, y) _) = translate x y $ color green $ circleSolid 3
-    render (Bullet Laser (x, y) _) = translate x y $ color (light red) $ rectangleSolid 10 2
+    render b@(Bullet Laser (x, y) _) | snd (velBullet b) > 0 = translate x y $ color (light red) $ rectangleSolid 2 10
+                                     | otherwise             = translate x y $ color (light red) $ rectangleSolid 10 2
 
   instance Movable Bullet where
     move b = b { posBullet = (x + vx, y + vy) }
