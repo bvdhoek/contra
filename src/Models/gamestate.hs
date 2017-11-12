@@ -7,6 +7,7 @@ module Models.GameState where
   import Models.Weapon
   import Models.Direction
   import Models.Level
+  import Models.Score
   import TypeClasses.Drawable
   import Graphics.Gloss
 
@@ -14,14 +15,14 @@ module Models.GameState where
   data Paused = Paused | NotPaused
 
   initState :: GameState
-  initState = GameState basePlayer [] [] [] baseLevel 0 NotFinished NotPaused
+  initState = GameState basePlayer [] [] [] baseLevel (Score 0) NotFinished NotPaused
 
   data GameState = GameState {  player :: Player
                               , items :: [Item]
                               , bullets :: [Bullet]
                               , enemies :: [Enemy]
                               , level :: Level
-                              , score :: Int
+                              , score :: Score
                               , progress :: Progress
                               , paused :: Paused
                              }
@@ -37,4 +38,4 @@ module Models.GameState where
                    | dirPlayer player == Models.Direction.Left  = (-5, 0)
 
   instance Drawable GameState where
-    render state = pictures ([render (player state)] ++ map render (bullets state) ++ map render (level state))
+    render state = pictures (map render (level state) ++ [render (player state)] ++ map render (bullets state) ++ [render (score state)])
