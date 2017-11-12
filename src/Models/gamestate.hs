@@ -15,7 +15,7 @@ module Models.GameState where
   data Paused = Paused | NotPaused
 
   initState :: GameState
-  initState = GameState basePlayer [] [] [] baseLevel (Score 0) NotFinished NotPaused
+  initState = GameState basePlayer [] [] [] baseLevel (Score 0) NotFinished NotPaused 0
 
   data GameState = GameState {  player :: Player
                               , items :: [Item]
@@ -25,6 +25,7 @@ module Models.GameState where
                               , score :: Score
                               , progress :: Progress
                               , paused :: Paused
+                              , frameCounter :: Int
                              }
 
   shoot :: GameState -> GameState
@@ -38,4 +39,4 @@ module Models.GameState where
                    | dirPlayer player == Models.Direction.Left  = (-5, 0)
 
   instance Drawable GameState where
-    render state = pictures (map render (level state) ++ [render (player state)] ++ map render (bullets state) ++ [render (score state)])
+    render state = pictures (map render (level state) ++ [render (player state)] ++ map render (bullets state) ++ [render (score state)] ++ map render (enemies state))
