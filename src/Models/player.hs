@@ -18,18 +18,23 @@ module Models.Player where
                        }
 
   basePlayer :: Player
-  basePlayer = Player Alive 4 (0,0) baseWeapon (0,0) Models.Direction.Right False
+  basePlayer = Player Alive 4 (0,0) baseWeapon (0,0) Models.Direction.Right True
 
   stopPlayer :: Player -> Player
   stopPlayer p = p { velPlayer = (0, 0) }
+
+  platformCheck :: Player -> Bool
+  platformCheck p | snd (posPlayer p) <= 0 = True
+                  | otherwise = False
 
   instance Drawable Player where
     render (Player _ _ (x, y)  _ _ Models.Direction.Right _) = translate x y $ png "sprites/LanceStandingR.png"
     render (Player _ _ (x, y)  _ _ Models.Direction.Left _) = translate x y $ png "sprites/LanceStandingL.png"
 
   instance Movable Player where
-    move p | vy > (-3) && onPlatform p == False = p { velPlayer = (vx, (vy - 1)), posPlayer = (x + vx, y + vy) }
-           | otherwise = p { posPlayer = (x + vx, y + vy) }
+    move p | vy > (-3) && onPlatform p == False = p { posPlayer = (x + vx, y + vy), velPlayer = (vx, (vy - 1)), onPlatform = platformCheck p }
+           | vy < 0 && onPlatform p = p { posPlayer = (x + vx, y + vy), velPlayer = (vx, 0), onPlatform = platformCheck p }
+           | otherwise = p { posPlayer = (x + vx, y + vy), onPlatform = platformCheck p }
       where
         (x, y) = posPlayer p
         (vx, vy) = velPlayer p
