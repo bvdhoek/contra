@@ -15,7 +15,7 @@ input (EventKey (SpecialKey KeyRight) Up _ _) s = return $ (s { player = moveHor
 input (EventKey (SpecialKey KeyLeft) Down _ _) s = return $ (s { player = moveHorizontal (player s) (-4) })
 input (EventKey (SpecialKey KeyLeft) Up _ _) s = return $ (s { player = moveHorizontal (player s) 0 })
 
-input (EventKey (SpecialKey KeyUp) Down _ _) s = return $ (s { player = moveVertical (player s) 10 })
+input (EventKey (SpecialKey KeyUp) Down _ _) s = return $ (s { player = moveVertical (player s) 8 })
 --input (EventKey (SpecialKey KeyUp) Up _ _) s = return $ (s { player = moveVertical (player s) 0 })
 
 input (EventKey (SpecialKey KeyDown) Down _ _) s = return $ (s { player = moveVertical (player s) 0 })
